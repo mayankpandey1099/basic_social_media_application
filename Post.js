@@ -9,12 +9,7 @@ const Post = sequelize.define("Post", {
     },
     description: {
         type: DataTypes.TEXT,
-    },
-    comments:{
-        type: DataTypes.JSON,
-        defaultValue : [],
-    },
-  
+    }, 
 });
 
 module.exports = Post;
