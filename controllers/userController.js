@@ -1,9 +1,10 @@
-Post = require('../models/userModel');
+Post = require('../models/Post');
+Comment = require("../models/Comment");
 
 const userController = {
     getPosts: async (req, res) => {
          try{
-            const posts = await Post.findAll({include : [{all : true}]});
+            const posts = await Post.findAll({include : Comment});
 
             res.json({
                 posts
@@ -21,7 +22,7 @@ const userController = {
         const {postId} = req.params;
 
         try{
-            const post = await Post.findByPk(postId, {include: [{all: true}]});
+            const post = await Post.findByPk(postId, {include: Comment});
 
             if(!post){
                 return res.status(404).json({
@@ -43,8 +44,7 @@ const userController = {
         try{
             const post = await Post.create({
                 link,
-                description,
-                comments: [],    
+                description,    
             });
             res.json({
                 message: 'Post created successfully', post
@@ -58,7 +58,6 @@ const userController = {
     },
 
     addComment: async (req, res) => {
-        console.log("Request body:", req.body);
         const {postId} = req.params;
         const {commentText} = req.body;
 
@@ -71,17 +70,15 @@ const userController = {
                 });
             }
 
-            console.log("Received postId:", postId);
-            console.log("Received commentText:", commentText);
-            console.log("Current post.comments:", post.comments);
-            
-            post.comments.push(commentText);
-
-            await post.save();
-
-            res.json({
-                message: "comment added successfully", post
+            const comment = await Comment.create({
+                text: commentText,
+                PostId: post.id,
             });
+            res.json({
+                message: "Comment added successfully",
+                comment,
+            });
+
         }catch (err){
             console.log("error adding the comment", err);
 
@@ -124,3 +121,4 @@ const userController = {
 
 };
 module.exports = userController;
+
