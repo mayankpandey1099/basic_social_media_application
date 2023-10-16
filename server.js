@@ -5,6 +5,9 @@ const express = require("express");
 const cors = require('cors');
 const sequelize = require('./database');
 
+const Post = require("./models/Post");
+const Comment = require("./models/Comment");
+
 
 const app  = express();
 
@@ -16,6 +19,15 @@ app.use(express.urlencoded({
 
 const userRoute = require('./routes/userRoute');
 app.use('/api/create-post', userRoute);
+
+Comment.belongsTo(Post, {
+    foreignKey: "PostId", 
+    onDelete: "CASCADE",
+});
+Post.hasMany(Comment, {
+    foreignKey: 'PostId',
+    onDelete: 'CASCADE',
+});
 
 const port = process.env.PORT || 3000;
 
