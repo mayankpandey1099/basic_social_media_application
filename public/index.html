@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body><div class="container">
+    <h1>Create a Post</h1>
+    <form id="postForm">
+        <label for="imageUrlInput">Insert link:</label>
+        <input type="text" id="imageUrlInput" class="buttonI" placeholder="Enter the image URL" required><br>
+        <label for="descriptionInput">Description:</label>
+        <input type="text" id="descriptionInput" class="buttonD" placeholder="Enter the description" required><br>
+        <button type="submit" class="buttonC" >Create Post</button>
+    </form>
+    <div id="posts" class="post-container"></div>
+    </div>
+    <script src="frontend.js"></script>    
+</body>
+</html>
